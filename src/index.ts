@@ -1,16 +1,26 @@
-import express from "express";
-import type { Request, Response } from "express";
-
+import 'dotenv/config';
+import express from 'express';
+import { prisma } from '../lib/prisma';
 
 const app = express();
-const PORT = 3000;
-
 app.use(express.json());
 
-app.get("/", (req: Request, res: Response) => {
-  res.json({ status: "ok", message: "Express + TypeScript backend is running!" });
+app.get('/', async (req, res) => {
+  res.json("Services API")
+})
+
+app.get('/users', async (req, res) => {
+  try {
+    const users = await prisma.user.findMany();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ 
+      error: error instanceof Error ? error.message : 'Unknown error' 
+    });
+  }
 });
 
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
