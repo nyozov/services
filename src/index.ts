@@ -1,9 +1,13 @@
 import 'dotenv/config';
 import express from 'express';
 import { prisma } from '../lib/prisma';
+import { clerkMiddleware } from '@clerk/express'
+
 
 const app = express();
 app.use(express.json());
+app.use(clerkMiddleware())
+
 
 app.get('/', async (req, res) => {
   res.json("Services API")
