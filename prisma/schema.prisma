@@ -14,10 +14,26 @@ datasource db {
 }
 
 model User {
+  id            String   @id @default(cuid())
+  clerkUserId   String   @unique
+  email         String   @unique
+  name          String?
+  stripeAccountId String? @unique
+  stores        Store[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Store {
   id          String   @id @default(cuid())
-  clerkUserId String   @unique
-  email       String   @unique
-  name        String?
+  name        String
+  slug        String   @unique // URL-friendly name: /store/johns-bakery
+  description String?
+  userId      String   // Foreign key to User
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  
+  @@index([userId]) // Speed up queries by userId
 }
