@@ -32,8 +32,41 @@ model Store {
   userId      String   // Foreign key to User
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   isActive    Boolean  @default(true)
+  items       Item[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   
   @@index([userId]) // Speed up queries by userId
+}
+
+model Item {
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  price       Decimal     @db.Decimal(10, 2)
+  isActive    Boolean     @default(true)
+
+  images      ItemImage[]
+
+  storeId     String
+  store       Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@index([storeId])
+}
+
+model ItemImage {
+  id        String   @id @default(cuid())
+  url       String
+  publicId  String
+  position  Int      @default(0)
+
+  itemId    String
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([itemId])
 }

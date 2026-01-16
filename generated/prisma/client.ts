@@ -49,3 +49,13 @@ export type User = Prisma.UserModel
  * 
  */
 export type Store = Prisma.StoreModel
+/**
+ * Model Item
+ * 
+ */
+export type Item = Prisma.ItemModel
+/**
+ * Model ItemImage
+ * 
+ */
+export type ItemImage = Prisma.ItemImageModel
