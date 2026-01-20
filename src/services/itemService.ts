@@ -68,3 +68,16 @@ export const getItemsByStoreId = async (storeId: string) => {
     },
   });
 };
+
+export const getPublicItemsByStoreId = async (storeId: string) => {
+  return prisma.item.findMany({
+    where: { 
+      storeId,
+      isActive: true // Only return active items for public
+    },
+    include: {
+      images: true,
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+};
