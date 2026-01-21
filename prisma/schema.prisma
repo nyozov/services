@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -15,60 +9,55 @@ datasource db {
 
 model User {
   id                       String   @id @default(cuid())
-  clerkUserId              String   @unique
   email                    String   @unique
   name                     String?
-  stripeOnboardingComplete Boolean  @default(false)
-  stripeAccountId          String?  @unique
-  stores                   Store[]
   createdAt                DateTime @default(now())
+  clerkUserId              String   @unique
   updatedAt                DateTime @updatedAt
+  stripeAccountId          String?  @unique
+  stripeOnboardingComplete Boolean  @default(false)
+  stores                   Store[]
 }
 
 model Store {
   id          String   @id @default(cuid())
   name        String
-  slug        String   @unique // URL-friendly name: /store/johns-bakery
+  slug        String   @unique
   description String?
-  userId      String // Foreign key to User
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
   isActive    Boolean  @default(true)
-  items       Item[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  items       Item[]
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([userId]) // Speed up queries by userId
+  @@index([userId])
 }
 
 model Item {
-  id          String  @id @default(cuid())
+  id          String      @id @default(cuid())
   name        String
   description String?
-  price       Decimal @db.Decimal(10, 2)
-  isActive    Boolean @default(true)
-
-  images ItemImage[]
-
-  storeId String
-  store   Store  @relation(fields: [storeId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  orders    Order[]
+  price       Decimal     @db.Decimal(10, 2)
+  isActive    Boolean     @default(true)
+  storeId     String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  store       Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  images      ItemImage[]
+  orders      Order[]
 
   @@index([storeId])
 }
 
 model ItemImage {
-  id       String @id @default(cuid())
-  url      String
-  publicId String
-  position Int    @default(0)
-
-  itemId String
-  item   Item   @relation(fields: [itemId], references: [id], onDelete: Cascade)
-
+  id        String   @id @default(cuid())
+  url       String
+  publicId  String
+  position  Int      @default(0)
+  itemId    String
   createdAt DateTime @default(now())
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
 
   @@index([itemId])
 }
@@ -76,17 +65,17 @@ model ItemImage {
 model Order {
   id              String   @id @default(cuid())
   itemId          String
-  item            Item     @relation(fields: [itemId], references: [id])
   buyerEmail      String
   buyerName       String?
   amount          Decimal  @db.Decimal(10, 2)
   platformFee     Decimal  @db.Decimal(10, 2)
   stripeSessionId String   @unique
   stripePaymentId String?  @unique
-  status          String   @default("pending") // pending, paid, shipped, completed, refunded, cancelled
+  status          String   @default("pending")
   shippingAddress Json?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+  item            Item     @relation(fields: [itemId], references: [id])
 
   @@index([itemId])
   @@index([buyerEmail])
