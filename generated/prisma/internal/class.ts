@@ -17,8 +17,8 @@ import type * as Prisma from "./prismaNamespace.js"
 
 const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
-  "clientVersion": "7.2.0",
-  "engineVersion": "0c8ef2ce45c83248ab3df073180d5eda9e8be7a3",
+  "clientVersion": "7.3.0",
+  "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
   "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel User {\n  id                       String   @id @default(cuid())\n  email                    String   @unique\n  name                     String?\n  createdAt                DateTime @default(now())\n  clerkUserId              String   @unique\n  updatedAt                DateTime @updatedAt\n  stripeAccountId          String?  @unique\n  stripeOnboardingComplete Boolean  @default(false)\n  stores                   Store[]\n}\n\nmodel Store {\n  id          String   @id @default(cuid())\n  name        String\n  slug        String   @unique\n  description String?\n  userId      String\n  isActive    Boolean  @default(true)\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n  items       Item[]\n  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@index([userId])\n}\n\nmodel Item {\n  id          String      @id @default(cuid())\n  name        String\n  description String?\n  price       Decimal     @db.Decimal(10, 2)\n  isActive    Boolean     @default(true)\n  storeId     String\n  createdAt   DateTime    @default(now())\n  updatedAt   DateTime    @updatedAt\n  store       Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)\n  images      ItemImage[]\n  orders      Order[]\n\n  @@index([storeId])\n}\n\nmodel ItemImage {\n  id        String   @id @default(cuid())\n  url       String\n  publicId  String\n  position  Int      @default(0)\n  itemId    String\n  createdAt DateTime @default(now())\n  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)\n\n  @@index([itemId])\n}\n\nmodel Order {\n  id              String   @id @default(cuid())\n  itemId          String\n  buyerEmail      String\n  buyerName       String?\n  amount          Decimal  @db.Decimal(10, 2)\n  platformFee     Decimal  @db.Decimal(10, 2)\n  stripeSessionId String   @unique\n  stripePaymentId String?  @unique\n  status          String   @default(\"pending\")\n  shippingAddress Json?\n  createdAt       DateTime @default(now())\n  updatedAt       DateTime @updatedAt\n  item            Item     @relation(fields: [itemId], references: [id])\n\n  @@index([itemId])\n  @@index([buyerEmail])\n  @@index([status])\n}\n",
   "runtimeDataModel": {
@@ -37,12 +37,14 @@ async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Modul
 }
 
 config.compilerWasm = {
-  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_bg.postgresql.mjs"),
+  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.mjs"),
 
   getQueryCompilerWasmModule: async () => {
-    const { wasm } = await import("@prisma/client/runtime/query_compiler_bg.postgresql.wasm-base64.mjs")
+    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.postgresql.wasm-base64.mjs")
     return await decodeBase64AsWasm(wasm)
-  }
+  },
+
+  importName: "./query_compiler_fast_bg.js"
 }
 
 
