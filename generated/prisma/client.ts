@@ -59,3 +59,8 @@ export type Item = Prisma.ItemModel
  * 
  */
 export type ItemImage = Prisma.ItemImageModel
+/**
+ * Model Order
+ * 
+ */
+export type Order = Prisma.OrderModel

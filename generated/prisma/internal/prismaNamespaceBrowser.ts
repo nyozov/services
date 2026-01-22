@@ -54,7 +54,8 @@ export const ModelName = {
   User: 'User',
   Store: 'Store',
   Item: 'Item',
-  ItemImage: 'ItemImage'
+  ItemImage: 'ItemImage',
+  Order: 'Order'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -63,24 +64,25 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  * Enums
  */
 
-export const TransactionIsolationLevel = {
+export const TransactionIsolationLevel = runtime.makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
   RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
-} as const
+} as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  clerkUserId: 'clerkUserId',
   email: 'email',
   name: 'name',
-  stripeAccountId: 'stripeAccountId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  clerkUserId: 'clerkUserId',
+  updatedAt: 'updatedAt',
+  stripeAccountId: 'stripeAccountId',
+  stripeOnboardingComplete: 'stripeOnboardingComplete'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -126,12 +128,38 @@ export const ItemImageScalarFieldEnum = {
 export type ItemImageScalarFieldEnum = (typeof ItemImageScalarFieldEnum)[keyof typeof ItemImageScalarFieldEnum]
 
 
+export const OrderScalarFieldEnum = {
+  id: 'id',
+  itemId: 'itemId',
+  buyerEmail: 'buyerEmail',
+  buyerName: 'buyerName',
+  amount: 'amount',
+  platformFee: 'platformFee',
+  stripeSessionId: 'stripeSessionId',
+  stripePaymentId: 'stripePaymentId',
+  status: 'status',
+  shippingAddress: 'shippingAddress',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -148,4 +176,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

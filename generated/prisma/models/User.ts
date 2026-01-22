@@ -26,64 +26,70 @@ export type AggregateUser = {
 
 export type UserMinAggregateOutputType = {
   id: string | null
-  clerkUserId: string | null
   email: string | null
   name: string | null
-  stripeAccountId: string | null
   createdAt: Date | null
+  clerkUserId: string | null
   updatedAt: Date | null
+  stripeAccountId: string | null
+  stripeOnboardingComplete: boolean | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
-  clerkUserId: string | null
   email: string | null
   name: string | null
-  stripeAccountId: string | null
   createdAt: Date | null
+  clerkUserId: string | null
   updatedAt: Date | null
+  stripeAccountId: string | null
+  stripeOnboardingComplete: boolean | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
-  clerkUserId: number
   email: number
   name: number
-  stripeAccountId: number
   createdAt: number
+  clerkUserId: number
   updatedAt: number
+  stripeAccountId: number
+  stripeOnboardingComplete: number
   _all: number
 }
 
 
 export type UserMinAggregateInputType = {
   id?: true
-  clerkUserId?: true
   email?: true
   name?: true
-  stripeAccountId?: true
   createdAt?: true
+  clerkUserId?: true
   updatedAt?: true
+  stripeAccountId?: true
+  stripeOnboardingComplete?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
-  clerkUserId?: true
   email?: true
   name?: true
-  stripeAccountId?: true
   createdAt?: true
+  clerkUserId?: true
   updatedAt?: true
+  stripeAccountId?: true
+  stripeOnboardingComplete?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
-  clerkUserId?: true
   email?: true
   name?: true
-  stripeAccountId?: true
   createdAt?: true
+  clerkUserId?: true
   updatedAt?: true
+  stripeAccountId?: true
+  stripeOnboardingComplete?: true
   _all?: true
 }
 
@@ -161,12 +167,13 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UserGroupByOutputType = {
   id: string
-  clerkUserId: string
   email: string
   name: string | null
-  stripeAccountId: string | null
   createdAt: Date
+  clerkUserId: string
   updatedAt: Date
+  stripeAccountId: string | null
+  stripeOnboardingComplete: boolean
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -192,30 +199,32 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
-  clerkUserId?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringNullableFilter<"User"> | string | null
-  stripeAccountId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  clerkUserId?: Prisma.StringFilter<"User"> | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  stripeAccountId?: Prisma.StringNullableFilter<"User"> | string | null
+  stripeOnboardingComplete?: Prisma.BoolFilter<"User"> | boolean
   stores?: Prisma.StoreListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  clerkUserId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
-  stripeAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  clerkUserId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  stripeAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripeOnboardingComplete?: Prisma.SortOrder
   stores?: Prisma.StoreOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  clerkUserId?: string
   email?: string
+  clerkUserId?: string
   stripeAccountId?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
@@ -223,17 +232,19 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  stripeOnboardingComplete?: Prisma.BoolFilter<"User"> | boolean
   stores?: Prisma.StoreListRelationFilter
-}, "id" | "clerkUserId" | "email" | "stripeAccountId">
+}, "id" | "email" | "clerkUserId" | "stripeAccountId">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  clerkUserId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
-  stripeAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  clerkUserId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  stripeAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripeOnboardingComplete?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -244,116 +255,127 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
-  clerkUserId?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  stripeAccountId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  clerkUserId?: Prisma.StringWithAggregatesFilter<"User"> | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  stripeAccountId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  stripeOnboardingComplete?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
 }
 
 export type UserCreateInput = {
   id?: string
-  clerkUserId: string
   email: string
   name?: string | null
-  stripeAccountId?: string | null
   createdAt?: Date | string
+  clerkUserId: string
   updatedAt?: Date | string
+  stripeAccountId?: string | null
+  stripeOnboardingComplete?: boolean
   stores?: Prisma.StoreCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
-  clerkUserId: string
   email: string
   name?: string | null
-  stripeAccountId?: string | null
   createdAt?: Date | string
+  clerkUserId: string
   updatedAt?: Date | string
+  stripeAccountId?: string | null
+  stripeOnboardingComplete?: boolean
   stores?: Prisma.StoreUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeOnboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stores?: Prisma.StoreUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeOnboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
   stores?: Prisma.StoreUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
-  clerkUserId: string
   email: string
   name?: string | null
-  stripeAccountId?: string | null
   createdAt?: Date | string
+  clerkUserId: string
   updatedAt?: Date | string
+  stripeAccountId?: string | null
+  stripeOnboardingComplete?: boolean
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeOnboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeOnboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  clerkUserId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  stripeAccountId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  clerkUserId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  stripeAccountId?: Prisma.SortOrder
+  stripeOnboardingComplete?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  clerkUserId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  stripeAccountId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  clerkUserId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  stripeAccountId?: Prisma.SortOrder
+  stripeOnboardingComplete?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  clerkUserId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  stripeAccountId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  clerkUserId?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  stripeAccountId?: Prisma.SortOrder
+  stripeOnboardingComplete?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -373,6 +395,10 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type UserCreateNestedOneWithoutStoresInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutStoresInput, Prisma.UserUncheckedCreateWithoutStoresInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutStoresInput
@@ -389,22 +415,24 @@ export type UserUpdateOneRequiredWithoutStoresNestedInput = {
 
 export type UserCreateWithoutStoresInput = {
   id?: string
-  clerkUserId: string
   email: string
   name?: string | null
-  stripeAccountId?: string | null
   createdAt?: Date | string
+  clerkUserId: string
   updatedAt?: Date | string
+  stripeAccountId?: string | null
+  stripeOnboardingComplete?: boolean
 }
 
 export type UserUncheckedCreateWithoutStoresInput = {
   id?: string
-  clerkUserId: string
   email: string
   name?: string | null
-  stripeAccountId?: string | null
   createdAt?: Date | string
+  clerkUserId: string
   updatedAt?: Date | string
+  stripeAccountId?: string | null
+  stripeOnboardingComplete?: boolean
 }
 
 export type UserCreateOrConnectWithoutStoresInput = {
@@ -425,22 +453,24 @@ export type UserUpdateToOneWithWhereWithoutStoresInput = {
 
 export type UserUpdateWithoutStoresInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeOnboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 export type UserUncheckedUpdateWithoutStoresInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeOnboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
 }
 
 
@@ -476,47 +506,51 @@ export type UserCountOutputTypeCountStoresArgs<ExtArgs extends runtime.Types.Ext
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  clerkUserId?: boolean
   email?: boolean
   name?: boolean
-  stripeAccountId?: boolean
   createdAt?: boolean
+  clerkUserId?: boolean
   updatedAt?: boolean
+  stripeAccountId?: boolean
+  stripeOnboardingComplete?: boolean
   stores?: boolean | Prisma.User$storesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  clerkUserId?: boolean
   email?: boolean
   name?: boolean
-  stripeAccountId?: boolean
   createdAt?: boolean
+  clerkUserId?: boolean
   updatedAt?: boolean
+  stripeAccountId?: boolean
+  stripeOnboardingComplete?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  clerkUserId?: boolean
   email?: boolean
   name?: boolean
-  stripeAccountId?: boolean
   createdAt?: boolean
+  clerkUserId?: boolean
   updatedAt?: boolean
+  stripeAccountId?: boolean
+  stripeOnboardingComplete?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
-  clerkUserId?: boolean
   email?: boolean
   name?: boolean
-  stripeAccountId?: boolean
   createdAt?: boolean
+  clerkUserId?: boolean
   updatedAt?: boolean
+  stripeAccountId?: boolean
+  stripeOnboardingComplete?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clerkUserId" | "email" | "name" | "stripeAccountId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "createdAt" | "clerkUserId" | "updatedAt" | "stripeAccountId" | "stripeOnboardingComplete", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   stores?: boolean | Prisma.User$storesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -531,12 +565,13 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    clerkUserId: string
     email: string
     name: string | null
-    stripeAccountId: string | null
     createdAt: Date
+    clerkUserId: string
     updatedAt: Date
+    stripeAccountId: string | null
+    stripeOnboardingComplete: boolean
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -962,12 +997,13 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
-  readonly clerkUserId: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
-  readonly stripeAccountId: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly clerkUserId: Prisma.FieldRef<"User", 'String'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly stripeAccountId: Prisma.FieldRef<"User", 'String'>
+  readonly stripeOnboardingComplete: Prisma.FieldRef<"User", 'Boolean'>
 }
     
 
