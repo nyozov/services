@@ -64,3 +64,8 @@ export type ItemImage = Prisma.ItemImageModel
  * 
  */
 export type Order = Prisma.OrderModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

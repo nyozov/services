@@ -7,14 +7,17 @@ import routes from './routes';
 const app = express();
 
 // Middleware
-app.use(express.json());
 app.use(cors());
+
+
+// IMPORTANT: Stripe webhook needs raw body
+app.use('/api/stripe/webhook', express.raw({ type: 'application/json' }));
 app.use(clerkMiddleware());
+app.use(express.json()); // This comes AFTER webhook route
 
 // Routes
 app.use('/api', routes);
 
-// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

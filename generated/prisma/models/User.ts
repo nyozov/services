@@ -206,6 +206,7 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   stripeAccountId?: Prisma.StringNullableFilter<"User"> | string | null
   stripeOnboardingComplete?: Prisma.BoolFilter<"User"> | boolean
+  notifications?: Prisma.NotificationListRelationFilter
   stores?: Prisma.StoreListRelationFilter
 }
 
@@ -218,6 +219,7 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   stripeAccountId?: Prisma.SortOrderInput | Prisma.SortOrder
   stripeOnboardingComplete?: Prisma.SortOrder
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
   stores?: Prisma.StoreOrderByRelationAggregateInput
 }
 
@@ -233,6 +235,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   stripeOnboardingComplete?: Prisma.BoolFilter<"User"> | boolean
+  notifications?: Prisma.NotificationListRelationFilter
   stores?: Prisma.StoreListRelationFilter
 }, "id" | "email" | "clerkUserId" | "stripeAccountId">
 
@@ -273,6 +276,7 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   stripeAccountId?: string | null
   stripeOnboardingComplete?: boolean
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   stores?: Prisma.StoreCreateNestedManyWithoutUserInput
 }
 
@@ -285,6 +289,7 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   stripeAccountId?: string | null
   stripeOnboardingComplete?: boolean
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   stores?: Prisma.StoreUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -297,6 +302,7 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeOnboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   stores?: Prisma.StoreUpdateManyWithoutUserNestedInput
 }
 
@@ -309,6 +315,7 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeOnboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   stores?: Prisma.StoreUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -413,6 +420,20 @@ export type UserUpdateOneRequiredWithoutStoresNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStoresInput, Prisma.UserUpdateWithoutStoresInput>, Prisma.UserUncheckedUpdateWithoutStoresInput>
 }
 
+export type UserCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type UserCreateWithoutStoresInput = {
   id?: string
   email: string
@@ -422,6 +443,7 @@ export type UserCreateWithoutStoresInput = {
   updatedAt?: Date | string
   stripeAccountId?: string | null
   stripeOnboardingComplete?: boolean
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStoresInput = {
@@ -433,6 +455,7 @@ export type UserUncheckedCreateWithoutStoresInput = {
   updatedAt?: Date | string
   stripeAccountId?: string | null
   stripeOnboardingComplete?: boolean
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStoresInput = {
@@ -460,6 +483,7 @@ export type UserUpdateWithoutStoresInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeOnboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStoresInput = {
@@ -471,6 +495,71 @@ export type UserUncheckedUpdateWithoutStoresInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stripeOnboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutNotificationsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  createdAt?: Date | string
+  clerkUserId: string
+  updatedAt?: Date | string
+  stripeAccountId?: string | null
+  stripeOnboardingComplete?: boolean
+  stores?: Prisma.StoreCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  email: string
+  name?: string | null
+  createdAt?: Date | string
+  clerkUserId: string
+  updatedAt?: Date | string
+  stripeAccountId?: string | null
+  stripeOnboardingComplete?: boolean
+  stores?: Prisma.StoreUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+}
+
+export type UserUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutNotificationsInput, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type UserUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeOnboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stores?: Prisma.StoreUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clerkUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  stripeAccountId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  stripeOnboardingComplete?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  stores?: Prisma.StoreUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -479,10 +568,12 @@ export type UserUncheckedUpdateWithoutStoresInput = {
  */
 
 export type UserCountOutputType = {
+  notifications: number
   stores: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   stores?: boolean | UserCountOutputTypeCountStoresArgs
 }
 
@@ -494,6 +585,13 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
 }
 
 /**
@@ -513,6 +611,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   stripeAccountId?: boolean
   stripeOnboardingComplete?: boolean
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   stores?: boolean | Prisma.User$storesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -552,6 +651,7 @@ export type UserSelectScalar = {
 
 export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "createdAt" | "clerkUserId" | "updatedAt" | "stripeAccountId" | "stripeOnboardingComplete", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   stores?: boolean | Prisma.User$storesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -561,6 +661,7 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
     stores: Prisma.$StorePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -966,6 +1067,7 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   stores<T extends Prisma.User$storesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$storesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1389,6 +1491,30 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
    * Limit how many Users to delete.
    */
   limit?: number
+}
+
+/**
+ * User.notifications
+ */
+export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**

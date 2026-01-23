@@ -4,6 +4,7 @@ import storeRoutes from './stores';
 import itemRoutes from './items'
 import stripeRoutes from './stripe'
 import orderRoutes from './orders'
+import notificationRoutes from './notifications';
 
 const router = Router();
 
@@ -15,6 +16,8 @@ router.use('/users', userRoutes);
 router.use('/stores', storeRoutes);
 router.use('/items', itemRoutes);
 router.use('/orders', orderRoutes);
+router.use('/notifications', notificationRoutes);
+
 
 router.use('/stripe', stripeRoutes);
 

@@ -11,6 +11,7 @@ model User {
   id                       String   @id @default(cuid())
   email                    String   @unique
   name                     String?
+  notifications            Notification[]
   createdAt                DateTime @default(now())
   clerkUserId              String   @unique
   updatedAt                DateTime @updatedAt
@@ -80,4 +81,19 @@ model Order {
   @@index([itemId])
   @@index([buyerEmail])
   @@index([status])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String   // order, payment, system
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  orderId   String?  // Optional reference to order
+  createdAt DateTime @default(now())
+  
+  @@index([userId])
+  @@index([read])
 }
