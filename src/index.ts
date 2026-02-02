@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import { clerkMiddleware } from '@clerk/express';
 import routes from './routes';
+import "./lib/redis";
 
 const app = express();
 

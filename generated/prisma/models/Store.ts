@@ -20,8 +20,18 @@ export type StoreModel = runtime.Types.Result.DefaultSelection<Prisma.$StorePayl
 
 export type AggregateStore = {
   _count: StoreCountAggregateOutputType | null
+  _avg: StoreAvgAggregateOutputType | null
+  _sum: StoreSumAggregateOutputType | null
   _min: StoreMinAggregateOutputType | null
   _max: StoreMaxAggregateOutputType | null
+}
+
+export type StoreAvgAggregateOutputType = {
+  viewCount: number | null
+}
+
+export type StoreSumAggregateOutputType = {
+  viewCount: number | null
 }
 
 export type StoreMinAggregateOutputType = {
@@ -33,6 +43,7 @@ export type StoreMinAggregateOutputType = {
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  viewCount: number | null
 }
 
 export type StoreMaxAggregateOutputType = {
@@ -44,6 +55,7 @@ export type StoreMaxAggregateOutputType = {
   isActive: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
+  viewCount: number | null
 }
 
 export type StoreCountAggregateOutputType = {
@@ -55,9 +67,18 @@ export type StoreCountAggregateOutputType = {
   isActive: number
   createdAt: number
   updatedAt: number
+  viewCount: number
   _all: number
 }
 
+
+export type StoreAvgAggregateInputType = {
+  viewCount?: true
+}
+
+export type StoreSumAggregateInputType = {
+  viewCount?: true
+}
 
 export type StoreMinAggregateInputType = {
   id?: true
@@ -68,6 +89,7 @@ export type StoreMinAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  viewCount?: true
 }
 
 export type StoreMaxAggregateInputType = {
@@ -79,6 +101,7 @@ export type StoreMaxAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  viewCount?: true
 }
 
 export type StoreCountAggregateInputType = {
@@ -90,6 +113,7 @@ export type StoreCountAggregateInputType = {
   isActive?: true
   createdAt?: true
   updatedAt?: true
+  viewCount?: true
   _all?: true
 }
 
@@ -131,6 +155,18 @@ export type StoreAggregateArgs<ExtArgs extends runtime.Types.Extensions.Internal
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: StoreAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: StoreSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: StoreMinAggregateInputType
@@ -161,6 +197,8 @@ export type StoreGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   _count?: StoreCountAggregateInputType | true
+  _avg?: StoreAvgAggregateInputType
+  _sum?: StoreSumAggregateInputType
   _min?: StoreMinAggregateInputType
   _max?: StoreMaxAggregateInputType
 }
@@ -174,7 +212,10 @@ export type StoreGroupByOutputType = {
   isActive: boolean
   createdAt: Date
   updatedAt: Date
+  viewCount: number
   _count: StoreCountAggregateOutputType | null
+  _avg: StoreAvgAggregateOutputType | null
+  _sum: StoreSumAggregateOutputType | null
   _min: StoreMinAggregateOutputType | null
   _max: StoreMaxAggregateOutputType | null
 }
@@ -206,6 +247,7 @@ export type StoreWhereInput = {
   isActive?: Prisma.BoolFilter<"Store"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
+  viewCount?: Prisma.IntFilter<"Store"> | number
   items?: Prisma.ItemListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -219,6 +261,7 @@ export type StoreOrderByWithRelationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
   items?: Prisma.ItemOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -235,6 +278,7 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   isActive?: Prisma.BoolFilter<"Store"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
+  viewCount?: Prisma.IntFilter<"Store"> | number
   items?: Prisma.ItemListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "slug">
@@ -248,9 +292,12 @@ export type StoreOrderByWithAggregationInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
   _count?: Prisma.StoreCountOrderByAggregateInput
+  _avg?: Prisma.StoreAvgOrderByAggregateInput
   _max?: Prisma.StoreMaxOrderByAggregateInput
   _min?: Prisma.StoreMinOrderByAggregateInput
+  _sum?: Prisma.StoreSumOrderByAggregateInput
 }
 
 export type StoreScalarWhereWithAggregatesInput = {
@@ -265,6 +312,7 @@ export type StoreScalarWhereWithAggregatesInput = {
   isActive?: Prisma.BoolWithAggregatesFilter<"Store"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
+  viewCount?: Prisma.IntWithAggregatesFilter<"Store"> | number
 }
 
 export type StoreCreateInput = {
@@ -275,6 +323,7 @@ export type StoreCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
   items?: Prisma.ItemCreateNestedManyWithoutStoreInput
   user: Prisma.UserCreateNestedOneWithoutStoresInput
 }
@@ -288,6 +337,7 @@ export type StoreUncheckedCreateInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutStoreInput
 }
 
@@ -299,6 +349,7 @@ export type StoreUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   items?: Prisma.ItemUpdateManyWithoutStoreNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutStoresNestedInput
 }
@@ -312,6 +363,7 @@ export type StoreUncheckedUpdateInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   items?: Prisma.ItemUncheckedUpdateManyWithoutStoreNestedInput
 }
 
@@ -324,6 +376,7 @@ export type StoreCreateManyInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
 }
 
 export type StoreUpdateManyMutationInput = {
@@ -334,6 +387,7 @@ export type StoreUpdateManyMutationInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type StoreUncheckedUpdateManyInput = {
@@ -345,6 +399,7 @@ export type StoreUncheckedUpdateManyInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type StoreListRelationFilter = {
@@ -366,6 +421,11 @@ export type StoreCountOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
+}
+
+export type StoreAvgOrderByAggregateInput = {
+  viewCount?: Prisma.SortOrder
 }
 
 export type StoreMaxOrderByAggregateInput = {
@@ -377,6 +437,7 @@ export type StoreMaxOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
 }
 
 export type StoreMinOrderByAggregateInput = {
@@ -388,6 +449,11 @@ export type StoreMinOrderByAggregateInput = {
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  viewCount?: Prisma.SortOrder
+}
+
+export type StoreSumOrderByAggregateInput = {
+  viewCount?: Prisma.SortOrder
 }
 
 export type StoreScalarRelationFilter = {
@@ -437,6 +503,14 @@ export type StoreUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.StoreScalarWhereInput | Prisma.StoreScalarWhereInput[]
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type StoreCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.StoreCreateWithoutItemsInput, Prisma.StoreUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.StoreCreateOrConnectWithoutItemsInput
@@ -459,6 +533,7 @@ export type StoreCreateWithoutUserInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
   items?: Prisma.ItemCreateNestedManyWithoutStoreInput
 }
 
@@ -470,6 +545,7 @@ export type StoreUncheckedCreateWithoutUserInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutStoreInput
 }
 
@@ -511,6 +587,7 @@ export type StoreScalarWhereInput = {
   isActive?: Prisma.BoolFilter<"Store"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
+  viewCount?: Prisma.IntFilter<"Store"> | number
 }
 
 export type StoreCreateWithoutItemsInput = {
@@ -521,6 +598,7 @@ export type StoreCreateWithoutItemsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
   user: Prisma.UserCreateNestedOneWithoutStoresInput
 }
 
@@ -533,6 +611,7 @@ export type StoreUncheckedCreateWithoutItemsInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
 }
 
 export type StoreCreateOrConnectWithoutItemsInput = {
@@ -559,6 +638,7 @@ export type StoreUpdateWithoutItemsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   user?: Prisma.UserUpdateOneRequiredWithoutStoresNestedInput
 }
 
@@ -571,6 +651,7 @@ export type StoreUncheckedUpdateWithoutItemsInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type StoreCreateManyUserInput = {
@@ -581,6 +662,7 @@ export type StoreCreateManyUserInput = {
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  viewCount?: number
 }
 
 export type StoreUpdateWithoutUserInput = {
@@ -591,6 +673,7 @@ export type StoreUpdateWithoutUserInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   items?: Prisma.ItemUpdateManyWithoutStoreNestedInput
 }
 
@@ -602,6 +685,7 @@ export type StoreUncheckedUpdateWithoutUserInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   items?: Prisma.ItemUncheckedUpdateManyWithoutStoreNestedInput
 }
 
@@ -613,6 +697,7 @@ export type StoreUncheckedUpdateManyWithoutUserInput = {
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  viewCount?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -655,6 +740,7 @@ export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  viewCount?: boolean
   items?: boolean | Prisma.Store$itemsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
@@ -669,6 +755,7 @@ export type StoreSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  viewCount?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["store"]>
 
@@ -681,6 +768,7 @@ export type StoreSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  viewCount?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["store"]>
 
@@ -693,9 +781,10 @@ export type StoreSelectScalar = {
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  viewCount?: boolean
 }
 
-export type StoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "userId" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["store"]>
+export type StoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "userId" | "isActive" | "createdAt" | "updatedAt" | "viewCount", ExtArgs["result"]["store"]>
 export type StoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | Prisma.Store$itemsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -723,6 +812,7 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     isActive: boolean
     createdAt: Date
     updatedAt: Date
+    viewCount: number
   }, ExtArgs["result"]["store"]>
   composites: {}
 }
@@ -1156,6 +1246,7 @@ export interface StoreFieldRefs {
   readonly isActive: Prisma.FieldRef<"Store", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Store", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Store", 'DateTime'>
+  readonly viewCount: Prisma.FieldRef<"Store", 'Int'>
 }
     
 

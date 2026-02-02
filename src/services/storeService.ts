@@ -1,4 +1,5 @@
 import { prisma } from '../lib/prisma';
+import { redis } from "../lib/redis";
 
 interface CreateStoreData {
   name: string;
@@ -64,3 +65,55 @@ const generateSlug = (name: string): string => {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 };
+
+function getIp(req) {
+  return (
+    req.headers["x-forwarded-for"]?.toString().split(",")[0] ||
+    req.socket.remoteAddress
+  );
+}
+
+function isBot(userAgent: string) {
+  return /bot|crawler|spider|preview|facebook|twitter|discord/i.test(userAgent);
+}
+
+export async function trackView(req) {
+  const { slug } = req.params;
+
+  const userAgent = req.headers["user-agent"] || "";
+  if (isBot(userAgent)) return;
+
+  const userId = req.user?.id; // if you have auth
+  const ip = getIp(req);
+
+  const viewerKey = userId ?? ip;
+  if (!viewerKey) return;
+
+  // Fetch store owner to avoid self-views
+  const store = await prisma.store.findUnique({
+    where: { slug },
+    select: { id: true, userId: true },
+  });
+
+  if (!store) return;
+  const storeId = store.id
+  if (userId && store.userId === userId) return;
+
+  const redisKey = `store:${storeId}:view:${viewerKey}`;
+
+  const alreadyViewed = await redis.get(redisKey);
+  if (alreadyViewed) return;
+
+  // Mark as viewed for 24h
+  await redis.set(redisKey, "1", "EX", 60 * 60 * 24);
+
+  // Increment DB counter
+  await prisma.store.update({
+    where: { id: storeId },
+    data: {
+      viewCount: {
+        increment: 1,
+      },
+    },
+  });
+}

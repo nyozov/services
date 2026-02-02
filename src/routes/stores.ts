@@ -7,6 +7,8 @@ const router = Router();
 // Public routes
 router.get('/:slug', storesController.getStoreBySlug);
 router.get('/:slug/items', storesController.getStoreItems);
+router.post("/:slug/view", storesController.trackView);
+
 
 // Protected routes (require authentication)
 router.use(requireAuth());

@@ -97,7 +97,8 @@ export const StoreScalarFieldEnum = {
   userId: 'userId',
   isActive: 'isActive',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  viewCount: 'viewCount'
 } as const
 
 export type StoreScalarFieldEnum = (typeof StoreScalarFieldEnum)[keyof typeof StoreScalarFieldEnum]
