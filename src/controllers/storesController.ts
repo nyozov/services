@@ -90,3 +90,13 @@ export const getStoreItems = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const trackView = async (req, res) => {
+  try {
+    await storeService.trackView(req);
+    res.sendStatus(200);
+  } catch (err) {
+    console.error("trackView error", err);
+    res.sendStatus(200); // never break page load
+  }
+};
