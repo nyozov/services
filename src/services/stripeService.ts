@@ -10,6 +10,12 @@ interface CreateCheckoutSessionData {
   cancelUrl: string;
 }
 
+interface RefundOrderData {
+  orderId: string;
+  amount?: number;
+  refundPlatformFee?: boolean;
+}
+
 export const createCheckoutSession = async (
   data: CreateCheckoutSessionData
 ) => {
@@ -119,4 +125,75 @@ export const updateOrderStatus = async (
       ...(paymentIntentId && { stripePaymentId: paymentIntentId }),
     },
   });
+};
+
+export const refundOrder = async (data: RefundOrderData) => {
+  // Get the order with store info
+  const order = await prisma.order.findUnique({
+    where: { id: data.orderId },
+    include: {
+      item: {
+        include: {
+          store: {
+            include: {
+              user: true,
+            },
+          },
+        },
+      },
+    },
+  });
+
+  if (!order) {
+    throw new Error("Order not found");
+  }
+
+  if (!order.stripePaymentId) {
+    throw new Error("No payment ID found for this order");
+  }
+
+  if (order.status === "refunded") {
+    throw new Error("Order already refunded");
+  }
+
+  if (!order.item.store.user.stripeAccountId) {
+    throw new Error("Store owner Stripe account not found");
+  }
+
+  // Calculate refund amount
+  const refundAmountInCents = data.amount
+    ? Math.round(data.amount * 100)
+    : undefined; // undefined means full refund
+
+  // Destination charge: PaymentIntent lives on the platform account.
+  // Refund from the platform and reverse the transfer + app fee.
+  const paymentIntent = await stripe.paymentIntents.retrieve(order.stripePaymentId);
+
+  if (!paymentIntent.latest_charge) {
+    throw new Error("No charge found for this payment");
+  }
+
+  const refund = await stripe.refunds.create({
+    charge: typeof paymentIntent.latest_charge === "string"
+      ? paymentIntent.latest_charge
+      : paymentIntent.latest_charge.id,
+    ...(refundAmountInCents && { amount: refundAmountInCents }),
+    refund_application_fee: data.refundPlatformFee ?? true, // default to refunding platform fee
+    reverse_transfer: true,
+  });
+
+  // Update order in database
+  const updatedOrder = await prisma.order.update({
+    where: { id: data.orderId },
+    data: {
+      status: refund.amount === Math.round(Number(order.amount) * 100) 
+        ? "refunded" 
+        : "partially_refunded",
+      refundedAt: new Date(),
+      stripeRefundId: refund.id,
+      refundAmount: refund.amount / 100, // convert back to dollars
+    },
+  });
+
+  return { refund, order: updatedOrder };
 };

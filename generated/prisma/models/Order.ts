@@ -29,11 +29,13 @@ export type AggregateOrder = {
 export type OrderAvgAggregateOutputType = {
   amount: runtime.Decimal | null
   platformFee: runtime.Decimal | null
+  refundAmount: runtime.Decimal | null
 }
 
 export type OrderSumAggregateOutputType = {
   amount: runtime.Decimal | null
   platformFee: runtime.Decimal | null
+  refundAmount: runtime.Decimal | null
 }
 
 export type OrderMinAggregateOutputType = {
@@ -48,6 +50,9 @@ export type OrderMinAggregateOutputType = {
   status: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  refundedAt: Date | null
+  stripeRefundId: string | null
+  refundAmount: runtime.Decimal | null
 }
 
 export type OrderMaxAggregateOutputType = {
@@ -62,6 +67,9 @@ export type OrderMaxAggregateOutputType = {
   status: string | null
   createdAt: Date | null
   updatedAt: Date | null
+  refundedAt: Date | null
+  stripeRefundId: string | null
+  refundAmount: runtime.Decimal | null
 }
 
 export type OrderCountAggregateOutputType = {
@@ -77,6 +85,9 @@ export type OrderCountAggregateOutputType = {
   shippingAddress: number
   createdAt: number
   updatedAt: number
+  refundedAt: number
+  stripeRefundId: number
+  refundAmount: number
   _all: number
 }
 
@@ -84,11 +95,13 @@ export type OrderCountAggregateOutputType = {
 export type OrderAvgAggregateInputType = {
   amount?: true
   platformFee?: true
+  refundAmount?: true
 }
 
 export type OrderSumAggregateInputType = {
   amount?: true
   platformFee?: true
+  refundAmount?: true
 }
 
 export type OrderMinAggregateInputType = {
@@ -103,6 +116,9 @@ export type OrderMinAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
+  refundedAt?: true
+  stripeRefundId?: true
+  refundAmount?: true
 }
 
 export type OrderMaxAggregateInputType = {
@@ -117,6 +133,9 @@ export type OrderMaxAggregateInputType = {
   status?: true
   createdAt?: true
   updatedAt?: true
+  refundedAt?: true
+  stripeRefundId?: true
+  refundAmount?: true
 }
 
 export type OrderCountAggregateInputType = {
@@ -132,6 +151,9 @@ export type OrderCountAggregateInputType = {
   shippingAddress?: true
   createdAt?: true
   updatedAt?: true
+  refundedAt?: true
+  stripeRefundId?: true
+  refundAmount?: true
   _all?: true
 }
 
@@ -234,6 +256,9 @@ export type OrderGroupByOutputType = {
   shippingAddress: runtime.JsonValue | null
   createdAt: Date
   updatedAt: Date
+  refundedAt: Date | null
+  stripeRefundId: string | null
+  refundAmount: runtime.Decimal | null
   _count: OrderCountAggregateOutputType | null
   _avg: OrderAvgAggregateOutputType | null
   _sum: OrderSumAggregateOutputType | null
@@ -272,6 +297,9 @@ export type OrderWhereInput = {
   shippingAddress?: Prisma.JsonNullableFilter<"Order">
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
+  refundedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
+  stripeRefundId?: Prisma.StringNullableFilter<"Order"> | string | null
+  refundAmount?: Prisma.DecimalNullableFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   item?: Prisma.XOR<Prisma.ItemScalarRelationFilter, Prisma.ItemWhereInput>
 }
 
@@ -288,6 +316,9 @@ export type OrderOrderByWithRelationInput = {
   shippingAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripeRefundId?: Prisma.SortOrderInput | Prisma.SortOrder
+  refundAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   item?: Prisma.ItemOrderByWithRelationInput
 }
 
@@ -307,6 +338,9 @@ export type OrderWhereUniqueInput = Prisma.AtLeast<{
   shippingAddress?: Prisma.JsonNullableFilter<"Order">
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
+  refundedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
+  stripeRefundId?: Prisma.StringNullableFilter<"Order"> | string | null
+  refundAmount?: Prisma.DecimalNullableFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   item?: Prisma.XOR<Prisma.ItemScalarRelationFilter, Prisma.ItemWhereInput>
 }, "id" | "stripeSessionId" | "stripePaymentId">
 
@@ -323,6 +357,9 @@ export type OrderOrderByWithAggregationInput = {
   shippingAddress?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  refundedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  stripeRefundId?: Prisma.SortOrderInput | Prisma.SortOrder
+  refundAmount?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.OrderCountOrderByAggregateInput
   _avg?: Prisma.OrderAvgOrderByAggregateInput
   _max?: Prisma.OrderMaxOrderByAggregateInput
@@ -346,6 +383,9 @@ export type OrderScalarWhereWithAggregatesInput = {
   shippingAddress?: Prisma.JsonNullableWithAggregatesFilter<"Order">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Order"> | Date | string
+  refundedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+  stripeRefundId?: Prisma.StringNullableWithAggregatesFilter<"Order"> | string | null
+  refundAmount?: Prisma.DecimalNullableWithAggregatesFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type OrderCreateInput = {
@@ -360,6 +400,9 @@ export type OrderCreateInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  refundedAt?: Date | string | null
+  stripeRefundId?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   item: Prisma.ItemCreateNestedOneWithoutOrdersInput
 }
 
@@ -376,6 +419,9 @@ export type OrderUncheckedCreateInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  refundedAt?: Date | string | null
+  stripeRefundId?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type OrderUpdateInput = {
@@ -390,6 +436,9 @@ export type OrderUpdateInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   item?: Prisma.ItemUpdateOneRequiredWithoutOrdersNestedInput
 }
 
@@ -406,6 +455,9 @@ export type OrderUncheckedUpdateInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type OrderCreateManyInput = {
@@ -421,6 +473,9 @@ export type OrderCreateManyInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  refundedAt?: Date | string | null
+  stripeRefundId?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type OrderUpdateManyMutationInput = {
@@ -435,6 +490,9 @@ export type OrderUpdateManyMutationInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type OrderUncheckedUpdateManyInput = {
@@ -450,6 +508,9 @@ export type OrderUncheckedUpdateManyInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type OrderListRelationFilter = {
@@ -475,11 +536,15 @@ export type OrderCountOrderByAggregateInput = {
   shippingAddress?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  refundedAt?: Prisma.SortOrder
+  stripeRefundId?: Prisma.SortOrder
+  refundAmount?: Prisma.SortOrder
 }
 
 export type OrderAvgOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   platformFee?: Prisma.SortOrder
+  refundAmount?: Prisma.SortOrder
 }
 
 export type OrderMaxOrderByAggregateInput = {
@@ -494,6 +559,9 @@ export type OrderMaxOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  refundedAt?: Prisma.SortOrder
+  stripeRefundId?: Prisma.SortOrder
+  refundAmount?: Prisma.SortOrder
 }
 
 export type OrderMinOrderByAggregateInput = {
@@ -508,11 +576,15 @@ export type OrderMinOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  refundedAt?: Prisma.SortOrder
+  stripeRefundId?: Prisma.SortOrder
+  refundAmount?: Prisma.SortOrder
 }
 
 export type OrderSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   platformFee?: Prisma.SortOrder
+  refundAmount?: Prisma.SortOrder
 }
 
 export type OrderCreateNestedManyWithoutItemInput = {
@@ -557,6 +629,18 @@ export type OrderUncheckedUpdateManyWithoutItemNestedInput = {
   deleteMany?: Prisma.OrderScalarWhereInput | Prisma.OrderScalarWhereInput[]
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type OrderCreateWithoutItemInput = {
   id?: string
   buyerEmail: string
@@ -569,6 +653,9 @@ export type OrderCreateWithoutItemInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  refundedAt?: Date | string | null
+  stripeRefundId?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type OrderUncheckedCreateWithoutItemInput = {
@@ -583,6 +670,9 @@ export type OrderUncheckedCreateWithoutItemInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  refundedAt?: Date | string | null
+  stripeRefundId?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type OrderCreateOrConnectWithoutItemInput = {
@@ -627,6 +717,9 @@ export type OrderScalarWhereInput = {
   shippingAddress?: Prisma.JsonNullableFilter<"Order">
   createdAt?: Prisma.DateTimeFilter<"Order"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Order"> | Date | string
+  refundedAt?: Prisma.DateTimeNullableFilter<"Order"> | Date | string | null
+  stripeRefundId?: Prisma.StringNullableFilter<"Order"> | string | null
+  refundAmount?: Prisma.DecimalNullableFilter<"Order"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type OrderCreateManyItemInput = {
@@ -641,6 +734,9 @@ export type OrderCreateManyItemInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   updatedAt?: Date | string
+  refundedAt?: Date | string | null
+  stripeRefundId?: string | null
+  refundAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type OrderUpdateWithoutItemInput = {
@@ -655,6 +751,9 @@ export type OrderUpdateWithoutItemInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type OrderUncheckedUpdateWithoutItemInput = {
@@ -669,6 +768,9 @@ export type OrderUncheckedUpdateWithoutItemInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 export type OrderUncheckedUpdateManyWithoutItemInput = {
@@ -683,6 +785,9 @@ export type OrderUncheckedUpdateManyWithoutItemInput = {
   shippingAddress?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  refundedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stripeRefundId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  refundAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
 }
 
 
@@ -700,6 +805,9 @@ export type OrderSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   shippingAddress?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  refundedAt?: boolean
+  stripeRefundId?: boolean
+  refundAmount?: boolean
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
@@ -716,6 +824,9 @@ export type OrderSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   shippingAddress?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  refundedAt?: boolean
+  stripeRefundId?: boolean
+  refundAmount?: boolean
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
@@ -732,6 +843,9 @@ export type OrderSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   shippingAddress?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  refundedAt?: boolean
+  stripeRefundId?: boolean
+  refundAmount?: boolean
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["order"]>
 
@@ -748,9 +862,12 @@ export type OrderSelectScalar = {
   shippingAddress?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  refundedAt?: boolean
+  stripeRefundId?: boolean
+  refundAmount?: boolean
 }
 
-export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemId" | "buyerEmail" | "buyerName" | "amount" | "platformFee" | "stripeSessionId" | "stripePaymentId" | "status" | "shippingAddress" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+export type OrderOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemId" | "buyerEmail" | "buyerName" | "amount" | "platformFee" | "stripeSessionId" | "stripePaymentId" | "status" | "shippingAddress" | "createdAt" | "updatedAt" | "refundedAt" | "stripeRefundId" | "refundAmount", ExtArgs["result"]["order"]>
 export type OrderInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
 }
@@ -779,6 +896,9 @@ export type $OrderPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     shippingAddress: runtime.JsonValue | null
     createdAt: Date
     updatedAt: Date
+    refundedAt: Date | null
+    stripeRefundId: string | null
+    refundAmount: runtime.Decimal | null
   }, ExtArgs["result"]["order"]>
   composites: {}
 }
@@ -1215,6 +1335,9 @@ export interface OrderFieldRefs {
   readonly shippingAddress: Prisma.FieldRef<"Order", 'Json'>
   readonly createdAt: Prisma.FieldRef<"Order", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Order", 'DateTime'>
+  readonly refundedAt: Prisma.FieldRef<"Order", 'DateTime'>
+  readonly stripeRefundId: Prisma.FieldRef<"Order", 'String'>
+  readonly refundAmount: Prisma.FieldRef<"Order", 'Decimal'>
 }
     
 

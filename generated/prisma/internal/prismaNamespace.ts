@@ -959,7 +959,10 @@ export const OrderScalarFieldEnum = {
   status: 'status',
   shippingAddress: 'shippingAddress',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  refundedAt: 'refundedAt',
+  stripeRefundId: 'stripeRefundId',
+  refundAmount: 'refundAmount'
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]

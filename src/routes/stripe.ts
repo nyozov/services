@@ -47,6 +47,9 @@ router.get('/session/:sessionId', async (req, res) => {
 // Public route - no auth required for checkout
 router.post('/checkout', stripeController.createCheckoutSession);
 
+// Refund order - auth required
+router.post('/refund', requireAuth(), stripeController.refundOrder);
+
 // Verify checkout session and update order (called by frontend after success redirect)
 router.get('/verify-session/:sessionId', async (req, res) => {
   try {

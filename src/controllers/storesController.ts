@@ -91,7 +91,7 @@ export const getStoreItems = async (req: Request, res: Response) => {
   }
 };
 
-export const trackView = async (req, res) => {
+export const trackView = async (req: Request, res: Response) => {
   try {
     await storeService.trackView(req);
     res.sendStatus(200);
