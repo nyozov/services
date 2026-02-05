@@ -39,6 +39,15 @@ export type StoreMinAggregateOutputType = {
   name: string | null
   slug: string | null
   description: string | null
+  primaryColor: string | null
+  bannerImage: string | null
+  logoImage: string | null
+  showBranding: boolean | null
+  enableReviews: boolean | null
+  showSocialLinks: boolean | null
+  websiteUrl: string | null
+  instagramUrl: string | null
+  twitterUrl: string | null
   userId: string | null
   isActive: boolean | null
   createdAt: Date | null
@@ -51,6 +60,15 @@ export type StoreMaxAggregateOutputType = {
   name: string | null
   slug: string | null
   description: string | null
+  primaryColor: string | null
+  bannerImage: string | null
+  logoImage: string | null
+  showBranding: boolean | null
+  enableReviews: boolean | null
+  showSocialLinks: boolean | null
+  websiteUrl: string | null
+  instagramUrl: string | null
+  twitterUrl: string | null
   userId: string | null
   isActive: boolean | null
   createdAt: Date | null
@@ -63,6 +81,15 @@ export type StoreCountAggregateOutputType = {
   name: number
   slug: number
   description: number
+  primaryColor: number
+  bannerImage: number
+  logoImage: number
+  showBranding: number
+  enableReviews: number
+  showSocialLinks: number
+  websiteUrl: number
+  instagramUrl: number
+  twitterUrl: number
   userId: number
   isActive: number
   createdAt: number
@@ -85,6 +112,15 @@ export type StoreMinAggregateInputType = {
   name?: true
   slug?: true
   description?: true
+  primaryColor?: true
+  bannerImage?: true
+  logoImage?: true
+  showBranding?: true
+  enableReviews?: true
+  showSocialLinks?: true
+  websiteUrl?: true
+  instagramUrl?: true
+  twitterUrl?: true
   userId?: true
   isActive?: true
   createdAt?: true
@@ -97,6 +133,15 @@ export type StoreMaxAggregateInputType = {
   name?: true
   slug?: true
   description?: true
+  primaryColor?: true
+  bannerImage?: true
+  logoImage?: true
+  showBranding?: true
+  enableReviews?: true
+  showSocialLinks?: true
+  websiteUrl?: true
+  instagramUrl?: true
+  twitterUrl?: true
   userId?: true
   isActive?: true
   createdAt?: true
@@ -109,6 +154,15 @@ export type StoreCountAggregateInputType = {
   name?: true
   slug?: true
   description?: true
+  primaryColor?: true
+  bannerImage?: true
+  logoImage?: true
+  showBranding?: true
+  enableReviews?: true
+  showSocialLinks?: true
+  websiteUrl?: true
+  instagramUrl?: true
+  twitterUrl?: true
   userId?: true
   isActive?: true
   createdAt?: true
@@ -208,6 +262,15 @@ export type StoreGroupByOutputType = {
   name: string
   slug: string
   description: string | null
+  primaryColor: string
+  bannerImage: string | null
+  logoImage: string | null
+  showBranding: boolean
+  enableReviews: boolean
+  showSocialLinks: boolean
+  websiteUrl: string | null
+  instagramUrl: string | null
+  twitterUrl: string | null
   userId: string
   isActive: boolean
   createdAt: Date
@@ -243,6 +306,15 @@ export type StoreWhereInput = {
   name?: Prisma.StringFilter<"Store"> | string
   slug?: Prisma.StringFilter<"Store"> | string
   description?: Prisma.StringNullableFilter<"Store"> | string | null
+  primaryColor?: Prisma.StringFilter<"Store"> | string
+  bannerImage?: Prisma.StringNullableFilter<"Store"> | string | null
+  logoImage?: Prisma.StringNullableFilter<"Store"> | string | null
+  showBranding?: Prisma.BoolFilter<"Store"> | boolean
+  enableReviews?: Prisma.BoolFilter<"Store"> | boolean
+  showSocialLinks?: Prisma.BoolFilter<"Store"> | boolean
+  websiteUrl?: Prisma.StringNullableFilter<"Store"> | string | null
+  instagramUrl?: Prisma.StringNullableFilter<"Store"> | string | null
+  twitterUrl?: Prisma.StringNullableFilter<"Store"> | string | null
   userId?: Prisma.StringFilter<"Store"> | string
   isActive?: Prisma.BoolFilter<"Store"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
@@ -257,6 +329,15 @@ export type StoreOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  primaryColor?: Prisma.SortOrder
+  bannerImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  logoImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  showBranding?: Prisma.SortOrder
+  enableReviews?: Prisma.SortOrder
+  showSocialLinks?: Prisma.SortOrder
+  websiteUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  instagramUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  twitterUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -274,6 +355,15 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.StoreWhereInput | Prisma.StoreWhereInput[]
   name?: Prisma.StringFilter<"Store"> | string
   description?: Prisma.StringNullableFilter<"Store"> | string | null
+  primaryColor?: Prisma.StringFilter<"Store"> | string
+  bannerImage?: Prisma.StringNullableFilter<"Store"> | string | null
+  logoImage?: Prisma.StringNullableFilter<"Store"> | string | null
+  showBranding?: Prisma.BoolFilter<"Store"> | boolean
+  enableReviews?: Prisma.BoolFilter<"Store"> | boolean
+  showSocialLinks?: Prisma.BoolFilter<"Store"> | boolean
+  websiteUrl?: Prisma.StringNullableFilter<"Store"> | string | null
+  instagramUrl?: Prisma.StringNullableFilter<"Store"> | string | null
+  twitterUrl?: Prisma.StringNullableFilter<"Store"> | string | null
   userId?: Prisma.StringFilter<"Store"> | string
   isActive?: Prisma.BoolFilter<"Store"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
@@ -288,6 +378,15 @@ export type StoreOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  primaryColor?: Prisma.SortOrder
+  bannerImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  logoImage?: Prisma.SortOrderInput | Prisma.SortOrder
+  showBranding?: Prisma.SortOrder
+  enableReviews?: Prisma.SortOrder
+  showSocialLinks?: Prisma.SortOrder
+  websiteUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  instagramUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  twitterUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -308,6 +407,15 @@ export type StoreScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Store"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Store"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
+  primaryColor?: Prisma.StringWithAggregatesFilter<"Store"> | string
+  bannerImage?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
+  logoImage?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
+  showBranding?: Prisma.BoolWithAggregatesFilter<"Store"> | boolean
+  enableReviews?: Prisma.BoolWithAggregatesFilter<"Store"> | boolean
+  showSocialLinks?: Prisma.BoolWithAggregatesFilter<"Store"> | boolean
+  websiteUrl?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
+  instagramUrl?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
+  twitterUrl?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
   userId?: Prisma.StringWithAggregatesFilter<"Store"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Store"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
@@ -320,6 +428,15 @@ export type StoreCreateInput = {
   name: string
   slug: string
   description?: string | null
+  primaryColor?: string
+  bannerImage?: string | null
+  logoImage?: string | null
+  showBranding?: boolean
+  enableReviews?: boolean
+  showSocialLinks?: boolean
+  websiteUrl?: string | null
+  instagramUrl?: string | null
+  twitterUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -333,6 +450,15 @@ export type StoreUncheckedCreateInput = {
   name: string
   slug: string
   description?: string | null
+  primaryColor?: string
+  bannerImage?: string | null
+  logoImage?: string | null
+  showBranding?: boolean
+  enableReviews?: boolean
+  showSocialLinks?: boolean
+  websiteUrl?: string | null
+  instagramUrl?: string | null
+  twitterUrl?: string | null
   userId: string
   isActive?: boolean
   createdAt?: Date | string
@@ -346,6 +472,15 @@ export type StoreUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.StringFieldUpdateOperationsInput | string
+  bannerImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  showBranding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showSocialLinks?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  websiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -359,6 +494,15 @@ export type StoreUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.StringFieldUpdateOperationsInput | string
+  bannerImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  showBranding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showSocialLinks?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  websiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -372,6 +516,15 @@ export type StoreCreateManyInput = {
   name: string
   slug: string
   description?: string | null
+  primaryColor?: string
+  bannerImage?: string | null
+  logoImage?: string | null
+  showBranding?: boolean
+  enableReviews?: boolean
+  showSocialLinks?: boolean
+  websiteUrl?: string | null
+  instagramUrl?: string | null
+  twitterUrl?: string | null
   userId: string
   isActive?: boolean
   createdAt?: Date | string
@@ -384,6 +537,15 @@ export type StoreUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.StringFieldUpdateOperationsInput | string
+  bannerImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  showBranding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showSocialLinks?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  websiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -395,6 +557,15 @@ export type StoreUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.StringFieldUpdateOperationsInput | string
+  bannerImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  showBranding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showSocialLinks?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  websiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -417,6 +588,15 @@ export type StoreCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  primaryColor?: Prisma.SortOrder
+  bannerImage?: Prisma.SortOrder
+  logoImage?: Prisma.SortOrder
+  showBranding?: Prisma.SortOrder
+  enableReviews?: Prisma.SortOrder
+  showSocialLinks?: Prisma.SortOrder
+  websiteUrl?: Prisma.SortOrder
+  instagramUrl?: Prisma.SortOrder
+  twitterUrl?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -433,6 +613,15 @@ export type StoreMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  primaryColor?: Prisma.SortOrder
+  bannerImage?: Prisma.SortOrder
+  logoImage?: Prisma.SortOrder
+  showBranding?: Prisma.SortOrder
+  enableReviews?: Prisma.SortOrder
+  showSocialLinks?: Prisma.SortOrder
+  websiteUrl?: Prisma.SortOrder
+  instagramUrl?: Prisma.SortOrder
+  twitterUrl?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -445,6 +634,15 @@ export type StoreMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  primaryColor?: Prisma.SortOrder
+  bannerImage?: Prisma.SortOrder
+  logoImage?: Prisma.SortOrder
+  showBranding?: Prisma.SortOrder
+  enableReviews?: Prisma.SortOrder
+  showSocialLinks?: Prisma.SortOrder
+  websiteUrl?: Prisma.SortOrder
+  instagramUrl?: Prisma.SortOrder
+  twitterUrl?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -530,6 +728,15 @@ export type StoreCreateWithoutUserInput = {
   name: string
   slug: string
   description?: string | null
+  primaryColor?: string
+  bannerImage?: string | null
+  logoImage?: string | null
+  showBranding?: boolean
+  enableReviews?: boolean
+  showSocialLinks?: boolean
+  websiteUrl?: string | null
+  instagramUrl?: string | null
+  twitterUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -542,6 +749,15 @@ export type StoreUncheckedCreateWithoutUserInput = {
   name: string
   slug: string
   description?: string | null
+  primaryColor?: string
+  bannerImage?: string | null
+  logoImage?: string | null
+  showBranding?: boolean
+  enableReviews?: boolean
+  showSocialLinks?: boolean
+  websiteUrl?: string | null
+  instagramUrl?: string | null
+  twitterUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -583,6 +799,15 @@ export type StoreScalarWhereInput = {
   name?: Prisma.StringFilter<"Store"> | string
   slug?: Prisma.StringFilter<"Store"> | string
   description?: Prisma.StringNullableFilter<"Store"> | string | null
+  primaryColor?: Prisma.StringFilter<"Store"> | string
+  bannerImage?: Prisma.StringNullableFilter<"Store"> | string | null
+  logoImage?: Prisma.StringNullableFilter<"Store"> | string | null
+  showBranding?: Prisma.BoolFilter<"Store"> | boolean
+  enableReviews?: Prisma.BoolFilter<"Store"> | boolean
+  showSocialLinks?: Prisma.BoolFilter<"Store"> | boolean
+  websiteUrl?: Prisma.StringNullableFilter<"Store"> | string | null
+  instagramUrl?: Prisma.StringNullableFilter<"Store"> | string | null
+  twitterUrl?: Prisma.StringNullableFilter<"Store"> | string | null
   userId?: Prisma.StringFilter<"Store"> | string
   isActive?: Prisma.BoolFilter<"Store"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
@@ -595,6 +820,15 @@ export type StoreCreateWithoutItemsInput = {
   name: string
   slug: string
   description?: string | null
+  primaryColor?: string
+  bannerImage?: string | null
+  logoImage?: string | null
+  showBranding?: boolean
+  enableReviews?: boolean
+  showSocialLinks?: boolean
+  websiteUrl?: string | null
+  instagramUrl?: string | null
+  twitterUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -607,6 +841,15 @@ export type StoreUncheckedCreateWithoutItemsInput = {
   name: string
   slug: string
   description?: string | null
+  primaryColor?: string
+  bannerImage?: string | null
+  logoImage?: string | null
+  showBranding?: boolean
+  enableReviews?: boolean
+  showSocialLinks?: boolean
+  websiteUrl?: string | null
+  instagramUrl?: string | null
+  twitterUrl?: string | null
   userId: string
   isActive?: boolean
   createdAt?: Date | string
@@ -635,6 +878,15 @@ export type StoreUpdateWithoutItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.StringFieldUpdateOperationsInput | string
+  bannerImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  showBranding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showSocialLinks?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  websiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -647,6 +899,15 @@ export type StoreUncheckedUpdateWithoutItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.StringFieldUpdateOperationsInput | string
+  bannerImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  showBranding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showSocialLinks?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  websiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -659,6 +920,15 @@ export type StoreCreateManyUserInput = {
   name: string
   slug: string
   description?: string | null
+  primaryColor?: string
+  bannerImage?: string | null
+  logoImage?: string | null
+  showBranding?: boolean
+  enableReviews?: boolean
+  showSocialLinks?: boolean
+  websiteUrl?: string | null
+  instagramUrl?: string | null
+  twitterUrl?: string | null
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -670,6 +940,15 @@ export type StoreUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.StringFieldUpdateOperationsInput | string
+  bannerImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  showBranding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showSocialLinks?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  websiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -682,6 +961,15 @@ export type StoreUncheckedUpdateWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.StringFieldUpdateOperationsInput | string
+  bannerImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  showBranding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showSocialLinks?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  websiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -694,6 +982,15 @@ export type StoreUncheckedUpdateManyWithoutUserInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  primaryColor?: Prisma.StringFieldUpdateOperationsInput | string
+  bannerImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoImage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  showBranding?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  enableReviews?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  showSocialLinks?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  websiteUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  instagramUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  twitterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -736,6 +1033,15 @@ export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   name?: boolean
   slug?: boolean
   description?: boolean
+  primaryColor?: boolean
+  bannerImage?: boolean
+  logoImage?: boolean
+  showBranding?: boolean
+  enableReviews?: boolean
+  showSocialLinks?: boolean
+  websiteUrl?: boolean
+  instagramUrl?: boolean
+  twitterUrl?: boolean
   userId?: boolean
   isActive?: boolean
   createdAt?: boolean
@@ -751,6 +1057,15 @@ export type StoreSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   slug?: boolean
   description?: boolean
+  primaryColor?: boolean
+  bannerImage?: boolean
+  logoImage?: boolean
+  showBranding?: boolean
+  enableReviews?: boolean
+  showSocialLinks?: boolean
+  websiteUrl?: boolean
+  instagramUrl?: boolean
+  twitterUrl?: boolean
   userId?: boolean
   isActive?: boolean
   createdAt?: boolean
@@ -764,6 +1079,15 @@ export type StoreSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   name?: boolean
   slug?: boolean
   description?: boolean
+  primaryColor?: boolean
+  bannerImage?: boolean
+  logoImage?: boolean
+  showBranding?: boolean
+  enableReviews?: boolean
+  showSocialLinks?: boolean
+  websiteUrl?: boolean
+  instagramUrl?: boolean
+  twitterUrl?: boolean
   userId?: boolean
   isActive?: boolean
   createdAt?: boolean
@@ -777,6 +1101,15 @@ export type StoreSelectScalar = {
   name?: boolean
   slug?: boolean
   description?: boolean
+  primaryColor?: boolean
+  bannerImage?: boolean
+  logoImage?: boolean
+  showBranding?: boolean
+  enableReviews?: boolean
+  showSocialLinks?: boolean
+  websiteUrl?: boolean
+  instagramUrl?: boolean
+  twitterUrl?: boolean
   userId?: boolean
   isActive?: boolean
   createdAt?: boolean
@@ -784,7 +1117,7 @@ export type StoreSelectScalar = {
   viewCount?: boolean
 }
 
-export type StoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "userId" | "isActive" | "createdAt" | "updatedAt" | "viewCount", ExtArgs["result"]["store"]>
+export type StoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "primaryColor" | "bannerImage" | "logoImage" | "showBranding" | "enableReviews" | "showSocialLinks" | "websiteUrl" | "instagramUrl" | "twitterUrl" | "userId" | "isActive" | "createdAt" | "updatedAt" | "viewCount", ExtArgs["result"]["store"]>
 export type StoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   items?: boolean | Prisma.Store$itemsArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -808,6 +1141,15 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     name: string
     slug: string
     description: string | null
+    primaryColor: string
+    bannerImage: string | null
+    logoImage: string | null
+    showBranding: boolean
+    enableReviews: boolean
+    showSocialLinks: boolean
+    websiteUrl: string | null
+    instagramUrl: string | null
+    twitterUrl: string | null
     userId: string
     isActive: boolean
     createdAt: Date
@@ -1242,6 +1584,15 @@ export interface StoreFieldRefs {
   readonly name: Prisma.FieldRef<"Store", 'String'>
   readonly slug: Prisma.FieldRef<"Store", 'String'>
   readonly description: Prisma.FieldRef<"Store", 'String'>
+  readonly primaryColor: Prisma.FieldRef<"Store", 'String'>
+  readonly bannerImage: Prisma.FieldRef<"Store", 'String'>
+  readonly logoImage: Prisma.FieldRef<"Store", 'String'>
+  readonly showBranding: Prisma.FieldRef<"Store", 'Boolean'>
+  readonly enableReviews: Prisma.FieldRef<"Store", 'Boolean'>
+  readonly showSocialLinks: Prisma.FieldRef<"Store", 'Boolean'>
+  readonly websiteUrl: Prisma.FieldRef<"Store", 'String'>
+  readonly instagramUrl: Prisma.FieldRef<"Store", 'String'>
+  readonly twitterUrl: Prisma.FieldRef<"Store", 'String'>
   readonly userId: Prisma.FieldRef<"Store", 'String'>
   readonly isActive: Prisma.FieldRef<"Store", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Store", 'DateTime'>

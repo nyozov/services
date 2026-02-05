@@ -14,5 +14,6 @@ router.post("/:slug/view", storesController.trackView);
 router.use(requireAuth());
 router.post('/', storesController.createStore);
 router.get('/', storesController.getUserStores);
+router.patch('/:id', storesController.updateStore);
 
 export default router;

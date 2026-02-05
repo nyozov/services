@@ -25,6 +25,15 @@ model Store {
   name        String
   slug        String   @unique
   description String?
+  primaryColor String  @default("#3b82f6")
+  bannerImage String?
+  logoImage   String?
+  showBranding Boolean @default(true)
+  enableReviews Boolean @default(false)
+  showSocialLinks Boolean @default(false)
+  websiteUrl  String?
+  instagramUrl String?
+  twitterUrl  String?
   userId      String
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())

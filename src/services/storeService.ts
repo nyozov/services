@@ -6,6 +6,21 @@ interface CreateStoreData {
   description?: string;
 }
 
+interface UpdateStoreData {
+  name?: string;
+  description?: string | null;
+  isActive?: boolean;
+  primaryColor?: string;
+  bannerImage?: string | null;
+  logoImage?: string | null;
+  showBranding?: boolean;
+  enableReviews?: boolean;
+  showSocialLinks?: boolean;
+  websiteUrl?: string | null;
+  instagramUrl?: string | null;
+  twitterUrl?: string | null;
+}
+
 export const createStore = async (clerkUserId: string, data: CreateStoreData) => {
   // Find user in database
   const user = await prisma.user.findUnique({
@@ -56,6 +71,37 @@ export const getStoreBySlug = async (slug: string) => {
   return prisma.store.findUnique({
     where: { slug },
     include: { user: true },
+  });
+};
+
+export const updateStore = async (
+  clerkUserId: string,
+  storeId: string,
+  data: UpdateStoreData
+) => {
+  const user = await prisma.user.findUnique({
+    where: { clerkUserId },
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const store = await prisma.store.findUnique({
+    where: { id: storeId },
+  });
+
+  if (!store) {
+    throw new Error("Store not found");
+  }
+
+  if (store.userId !== user.id) {
+    throw new Error("Unauthorized");
+  }
+
+  return prisma.store.update({
+    where: { id: storeId },
+    data,
   });
 };
 
