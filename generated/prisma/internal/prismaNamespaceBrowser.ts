@@ -56,7 +56,12 @@ export const ModelName = {
   Item: 'Item',
   ItemImage: 'ItemImage',
   Order: 'Order',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  Conversation: 'Conversation',
+  Message: 'Message',
+  ConversationParticipant: 'ConversationParticipant',
+  Guest: 'Guest',
+  GuestAccessToken: 'GuestAccessToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -172,6 +177,60 @@ export const NotificationScalarFieldEnum = {
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const ConversationScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type ConversationScalarFieldEnum = (typeof ConversationScalarFieldEnum)[keyof typeof ConversationScalarFieldEnum]
+
+
+export const MessageScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  createdAt: 'createdAt',
+  conversationId: 'conversationId',
+  senderUserId: 'senderUserId',
+  senderGuestId: 'senderGuestId'
+} as const
+
+export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
+
+
+export const ConversationParticipantScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  userId: 'userId',
+  lastReadAt: 'lastReadAt',
+  joinedAt: 'joinedAt'
+} as const
+
+export type ConversationParticipantScalarFieldEnum = (typeof ConversationParticipantScalarFieldEnum)[keyof typeof ConversationParticipantScalarFieldEnum]
+
+
+export const GuestScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  createdAt: 'createdAt'
+} as const
+
+export type GuestScalarFieldEnum = (typeof GuestScalarFieldEnum)[keyof typeof GuestScalarFieldEnum]
+
+
+export const GuestAccessTokenScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  conversationId: 'conversationId',
+  guestId: 'guestId',
+  createdAt: 'createdAt'
+} as const
+
+export type GuestAccessTokenScalarFieldEnum = (typeof GuestAccessTokenScalarFieldEnum)[keyof typeof GuestAccessTokenScalarFieldEnum]
 
 
 export const SortOrder = {
