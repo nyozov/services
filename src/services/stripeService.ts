@@ -10,6 +10,12 @@ interface CreateCheckoutSessionData {
   cancelUrl: string;
 }
 
+interface CreatePaymentIntentData {
+  itemId: string;
+  buyerEmail?: string;
+  idempotencyKey?: string;
+}
+
 interface RefundOrderData {
   orderId: string;
   amount?: number;
@@ -99,6 +105,64 @@ export const createCheckoutSession = async (
   return session;
 };
 
+export const createPaymentIntent = async (data: CreatePaymentIntentData) => {
+  const item = await prisma.item.findUnique({
+    where: { id: data.itemId },
+    include: {
+      store: {
+        include: {
+          user: true,
+        },
+      },
+      images: {
+        orderBy: { position: "asc" },
+        take: 1,
+      },
+    },
+  });
+
+  if (!item) {
+    throw new Error("Item not found");
+  }
+
+  if (!item.store.user.stripeAccountId) {
+    throw new Error("Store owner has not set up payments");
+  }
+
+  if (!item.store.user.stripeOnboardingComplete) {
+    throw new Error("Store owner has not completed payment setup");
+  }
+
+  const amount = Number(item.price);
+  const platformFee = Math.round(amount * PLATFORM_FEE_PERCENTAGE * 100); // in cents
+  const amountInCents = Math.round(amount * 100); // in cents
+
+  const paymentIntent = await stripe.paymentIntents.create(
+    {
+      amount: amountInCents,
+      currency: "usd",
+      automatic_payment_methods: { enabled: true },
+      ...(data.buyerEmail && { receipt_email: data.buyerEmail }),
+      application_fee_amount: platformFee,
+      transfer_data: {
+        destination: item.store.user.stripeAccountId,
+      },
+      metadata: {
+        itemId: item.id,
+        storeId: item.store.id,
+        platformFee: platformFee.toString(),
+        ...(data.buyerEmail && { buyerEmail: data.buyerEmail }),
+      },
+    },
+    data.idempotencyKey ? { idempotencyKey: data.idempotencyKey } : undefined
+  );
+
+  return {
+    clientSecret: paymentIntent.client_secret,
+    paymentIntentId: paymentIntent.id,
+  };
+};
+
 export const getOrderBySessionId = async (sessionId: string) => {
   return prisma.order.findUnique({
     where: { stripeSessionId: sessionId },
@@ -110,6 +174,30 @@ export const getOrderBySessionId = async (sessionId: string) => {
         },
       },
     },
+  });
+};
+
+export const getOrderByPaymentIntentId = async (paymentIntentId: string) => {
+  return prisma.order.findUnique({
+    where: { stripePaymentId: paymentIntentId },
+    include: {
+      item: {
+        include: {
+          store: true,
+          images: true,
+        },
+      },
+    },
+  });
+};
+
+export const updateOrderEmailByPaymentIntentId = async (
+  paymentIntentId: string,
+  buyerEmail: string
+) => {
+  return prisma.order.updateMany({
+    where: { stripePaymentId: paymentIntentId },
+    data: { buyerEmail },
   });
 };
 
@@ -125,6 +213,94 @@ export const updateOrderStatus = async (
       ...(paymentIntentId && { stripePaymentId: paymentIntentId }),
     },
   });
+};
+
+export const updateOrderStatusByPaymentIntent = async (
+  paymentIntentId: string,
+  status: string
+) => {
+  return prisma.order.update({
+    where: { stripePaymentId: paymentIntentId },
+    data: {
+      status,
+    },
+  });
+};
+
+export const createOrderFromPaymentIntent = async (
+  paymentIntent: {
+    id: string;
+    amount: number;
+    receipt_email: string | null;
+    metadata: Record<string, string>;
+  }
+) => {
+  const existing = await prisma.order.findUnique({
+    where: { stripePaymentId: paymentIntent.id },
+    include: {
+      item: {
+        include: { store: true },
+      },
+    },
+  });
+
+  if (existing) {
+    return existing;
+  }
+
+  const itemId = paymentIntent.metadata?.itemId;
+  if (!itemId) {
+    throw new Error("Missing itemId metadata on payment intent");
+  }
+
+  const item = await prisma.item.findUnique({
+    where: { id: itemId },
+    include: { store: true },
+  });
+
+  if (!item) {
+    throw new Error("Item not found for payment intent");
+  }
+
+  const platformFeeCents =
+    paymentIntent.metadata?.platformFee
+      ? Number(paymentIntent.metadata.platformFee)
+      : Math.round(Number(item.price) * PLATFORM_FEE_PERCENTAGE * 100);
+
+  const buyerEmail =
+    paymentIntent.receipt_email ||
+    paymentIntent.metadata?.buyerEmail ||
+    "";
+
+  try {
+    const order = await prisma.order.create({
+      data: {
+        itemId: item.id,
+        buyerEmail,
+        amount: item.price,
+        platformFee: platformFeeCents / 100,
+        stripeSessionId: paymentIntent.id,
+        stripePaymentId: paymentIntent.id,
+        status: "paid",
+      },
+      include: {
+        item: {
+          include: { store: true },
+        },
+      },
+    });
+
+    return order;
+  } catch (error: any) {
+    if (error?.code === "P2002") {
+      const fallback = await prisma.order.findUnique({
+        where: { stripePaymentId: paymentIntent.id },
+        include: { item: { include: { store: true } } },
+      });
+      if (fallback) return fallback;
+    }
+    throw error;
+  }
 };
 
 export const refundOrder = async (data: RefundOrderData) => {
@@ -174,9 +350,10 @@ export const refundOrder = async (data: RefundOrderData) => {
   }
 
   const refund = await stripe.refunds.create({
-    charge: typeof paymentIntent.latest_charge === "string"
-      ? paymentIntent.latest_charge
-      : paymentIntent.latest_charge.id,
+    charge:
+      typeof paymentIntent.latest_charge === "string"
+        ? paymentIntent.latest_charge
+        : paymentIntent.latest_charge.id,
     ...(refundAmountInCents && { amount: refundAmountInCents }),
     refund_application_fee: data.refundPlatformFee ?? true, // default to refunding platform fee
     reverse_transfer: true,
@@ -186,9 +363,10 @@ export const refundOrder = async (data: RefundOrderData) => {
   const updatedOrder = await prisma.order.update({
     where: { id: data.orderId },
     data: {
-      status: refund.amount === Math.round(Number(order.amount) * 100) 
-        ? "refunded" 
-        : "partially_refunded",
+      status:
+        refund.amount === Math.round(Number(order.amount) * 100)
+          ? "refunded"
+          : "partially_refunded",
       refundedAt: new Date(),
       stripeRefundId: refund.id,
       refundAmount: refund.amount / 100, // convert back to dollars

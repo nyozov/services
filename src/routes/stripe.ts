@@ -47,6 +47,11 @@ router.get('/session/:sessionId', async (req, res) => {
 // Public route - no auth required for checkout
 router.post('/checkout', stripeController.createCheckoutSession);
 
+// Public route - create payment intent for in-app checkout
+router.post('/payment-intent', stripeController.createPaymentIntent);
+router.post('/payment-intent/:paymentIntentId/email', stripeController.updatePaymentIntentEmail);
+router.post('/payment-intent/:paymentIntentId/sync', stripeController.syncPaymentIntent);
+
 // Refund order - auth required
 router.post('/refund', requireAuth(), stripeController.refundOrder);
 

@@ -94,6 +94,53 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
         break;
       }
 
+      case "payment_intent.succeeded": {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
+
+        const order = await stripeService.createOrderFromPaymentIntent({
+          id: paymentIntent.id,
+          amount: paymentIntent.amount,
+          receipt_email: paymentIntent.receipt_email ?? null,
+          metadata: paymentIntent.metadata || {},
+        });
+
+        const storeOwner = await prisma.user.findUnique({
+          where: { id: order.item.store.userId },
+        });
+
+        if (storeOwner) {
+          await notificationService.createNotification({
+            userId: storeOwner.id,
+            type: "order",
+            title: "New Order Received!",
+            message: `You have a new order for "${order.item.name}" from ${order.buyerEmail}`,
+            orderId: order.id,
+          });
+          console.log("Notification created successfully");
+        }
+
+        break;
+      }
+
+      case "payment_intent.payment_failed":
+      case "payment_intent.canceled": {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
+
+        const order = await stripeService.getOrderByPaymentIntentId(paymentIntent.id);
+
+        if (!order) {
+          console.log("Payment intent failed with no order:", paymentIntent.id);
+          break;
+        }
+
+        if (order.status !== "pending") {
+          break;
+        }
+
+        await stripeService.updateOrderStatusByPaymentIntent(paymentIntent.id, "cancelled");
+        break;
+      }
+
       case "checkout.session.expired": {
         const session = event.data.object as Stripe.Checkout.Session;
 
