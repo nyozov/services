@@ -8,39 +8,42 @@ datasource db {
 }
 
 model User {
-  id                       String   @id @default(cuid())
-  email                    String   @unique
+  id                       String                    @id @default(cuid())
+  email                    String                    @unique
   name                     String?
   notifications            Notification[]
-  createdAt                DateTime @default(now())
-  clerkUserId              String   @unique
-  updatedAt                DateTime @updatedAt
-  stripeAccountId          String?  @unique
-  stripeOnboardingComplete Boolean  @default(false)
+  createdAt                DateTime                  @default(now())
+  clerkUserId              String                    @unique
+  updatedAt                DateTime                  @updatedAt
+  stripeAccountId          String?                   @unique
+  stripeOnboardingComplete Boolean                   @default(false)
   stores                   Store[]
+  coversations             Conversation[]
+  messages                 Message[]
+  conversationParticipants ConversationParticipant[]
 }
 
 model Store {
-  id          String   @id @default(cuid())
-  name        String
-  slug        String   @unique
-  description String?
-  primaryColor String  @default("#3b82f6")
-  bannerImage String?
-  logoImage   String?
-  showBranding Boolean @default(true)
-  enableReviews Boolean @default(false)
-  showSocialLinks Boolean @default(false)
-  websiteUrl  String?
-  instagramUrl String?
-  twitterUrl  String?
-  userId      String
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  items       Item[]
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  viewCount   Int      @default(0)
+  id              String   @id @default(cuid())
+  name            String
+  slug            String   @unique
+  description     String?
+  primaryColor    String   @default("#3b82f6")
+  bannerImage     String?
+  logoImage       String?
+  showBranding    Boolean  @default(true)
+  enableReviews   Boolean  @default(false)
+  showSocialLinks Boolean  @default(false)
+  websiteUrl      String?
+  instagramUrl    String?
+  twitterUrl      String?
+  userId          String
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  items           Item[]
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  viewCount       Int      @default(0)
 
   @@index([userId])
 }
@@ -74,19 +77,19 @@ model ItemImage {
 }
 
 model Order {
-  id              String   @id @default(cuid())
+  id              String    @id @default(cuid())
   itemId          String
   buyerEmail      String
   buyerName       String?
-  amount          Decimal  @db.Decimal(10, 2)
-  platformFee     Decimal  @db.Decimal(10, 2)
-  stripeSessionId String   @unique
-  stripePaymentId String?  @unique
-  status          String   @default("pending")
+  amount          Decimal   @db.Decimal(10, 2)
+  platformFee     Decimal   @db.Decimal(10, 2)
+  stripeSessionId String    @unique
+  stripePaymentId String?   @unique
+  status          String    @default("pending")
   shippingAddress Json?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  item            Item     @relation(fields: [itemId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  item            Item      @relation(fields: [itemId], references: [id])
   refundedAt      DateTime?
   stripeRefundId  String?
   refundAmount    Decimal?
@@ -100,13 +103,82 @@ model Notification {
   id        String   @id @default(cuid())
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type      String   // order, payment, system
+  type      String // order, payment, system
   title     String
   message   String
   read      Boolean  @default(false)
-  orderId   String?  // Optional reference to order
+  orderId   String? // Optional reference to order
   createdAt DateTime @default(now())
-  
+
   @@index([userId])
   @@index([read])
+}
+
+model Conversation {
+  id           String                    @id @default(cuid())
+  createdAt    DateTime                  @default(now())
+  updatedAt    DateTime                  @updatedAt
+  messages     Message[]
+  participants ConversationParticipant[]
+
+  user              User?              @relation(fields: [userId], references: [id])
+  userId            String?
+  guestAccessTokens GuestAccessToken[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+
+  conversationId String
+
+  senderUserId  String?
+  senderGuestId String?
+
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+  senderUser   User?        @relation(fields: [senderUserId], references: [id])
+  senderGuest  Guest?       @relation(fields: [senderGuestId], references: [id])
+
+  @@index([conversationId])
+}
+
+model ConversationParticipant {
+  id             String    @id @default(cuid())
+  conversationId String
+  userId         String
+  lastReadAt     DateTime?
+  joinedAt       DateTime  @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+  user         User         @relation(fields: [userId], references: [id])
+
+  @@unique([conversationId, userId])
+  @@index([userId])
+}
+
+model Guest {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+
+  messages     Message[]
+  accessTokens GuestAccessToken[]
+
+  @@index([email])
+}
+
+model GuestAccessToken {
+  id             String   @id @default(cuid())
+  token          String   @unique
+  conversationId String
+  guestId        String
+  createdAt      DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+  guest        Guest        @relation(fields: [guestId], references: [id])
+
+  @@index([guestId])
+  @@index([conversationId])
 }

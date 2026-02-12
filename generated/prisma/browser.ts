@@ -47,3 +47,28 @@ export type Order = Prisma.OrderModel
  * 
  */
 export type Notification = Prisma.NotificationModel
+/**
+ * Model Conversation
+ * 
+ */
+export type Conversation = Prisma.ConversationModel
+/**
+ * Model Message
+ * 
+ */
+export type Message = Prisma.MessageModel
+/**
+ * Model ConversationParticipant
+ * 
+ */
+export type ConversationParticipant = Prisma.ConversationParticipantModel
+/**
+ * Model Guest
+ * 
+ */
+export type Guest = Prisma.GuestModel
+/**
+ * Model GuestAccessToken
+ * 
+ */
+export type GuestAccessToken = Prisma.GuestAccessTokenModel
