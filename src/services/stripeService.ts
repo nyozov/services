@@ -233,6 +233,17 @@ export const createOrderFromPaymentIntent = async (
     amount: number;
     receipt_email: string | null;
     metadata: Record<string, string>;
+    shipping?: {
+      name?: string | null;
+      address?: {
+        line1?: string | null;
+        line2?: string | null;
+        city?: string | null;
+        state?: string | null;
+        postal_code?: string | null;
+        country?: string | null;
+      } | null;
+    } | null;
   }
 ) => {
   const existing = await prisma.order.findUnique({
@@ -273,16 +284,17 @@ export const createOrderFromPaymentIntent = async (
     "";
 
   try {
-    const order = await prisma.order.create({
-      data: {
-        itemId: item.id,
-        buyerEmail,
-        amount: item.price,
-        platformFee: platformFeeCents / 100,
-        stripeSessionId: paymentIntent.id,
-        stripePaymentId: paymentIntent.id,
-        status: "paid",
-      },
+  const order = await prisma.order.create({
+    data: {
+      itemId: item.id,
+      buyerEmail,
+      amount: item.price,
+      platformFee: platformFeeCents / 100,
+      stripeSessionId: paymentIntent.id,
+      stripePaymentId: paymentIntent.id,
+      status: "paid",
+      shippingAddress: paymentIntent.shipping ?? null,
+    },
       include: {
         item: {
           include: { store: true },

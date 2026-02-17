@@ -37,6 +37,34 @@ export const createOnboardingLink = async (req: Request, res: Response) => {
   }
 };
 
+export const createAccountSession = async (req: Request, res: Response) => {
+  try {
+    const { userId } = getAuth(req);
+
+    if (!userId) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const userEmail = req.body.email || `${userId}@temp.com`;
+
+    const accountId = await stripeConnectService.createConnectAccount(
+      userId,
+      userEmail
+    );
+
+    const clientSecret = await stripeConnectService.createAccountSession(
+      accountId
+    );
+
+    res.json({ clientSecret });
+  } catch (error) {
+    console.error('Error creating account session:', error);
+    res.status(500).json({
+      error: error instanceof Error ? error.message : 'Failed to create account session',
+    });
+  }
+};
+
 export const getConnectStatus = async (req: Request, res: Response) => {
   try {
     const { userId } = getAuth(req);

@@ -118,6 +118,7 @@ export const syncPaymentIntent = async (req: Request, res: Response) => {
         amount: paymentIntent.amount,
         receipt_email: paymentIntent.receipt_email ?? null,
         metadata: paymentIntent.metadata || {},
+        shipping: paymentIntent.shipping ?? null,
       });
       orderId = order.id;
 

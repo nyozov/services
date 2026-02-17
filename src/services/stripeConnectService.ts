@@ -50,6 +50,19 @@ export const createAccountLink = async (
   return accountLink.url;
 };
 
+export const createAccountSession = async (accountId: string) => {
+  const accountSession = await stripe.accountSessions.create({
+    account: accountId,
+    components: {
+      account_onboarding: {
+        enabled: true,
+      },
+    },
+  });
+
+  return accountSession.client_secret;
+};
+
 export const getAccountStatus = async (clerkUserId: string) => {
   const user = await prisma.user.findUnique({
     where: { clerkUserId },

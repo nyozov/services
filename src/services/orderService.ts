@@ -14,6 +14,9 @@ export const getOrdersByClerkUserId = async (clerkUserId: string) => {
                   item: {
                     include: {
                       store: true,
+                      images: {
+                        orderBy: { position: 'asc' },
+                      },
                     },
                   },
                 },

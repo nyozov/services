@@ -139,6 +139,7 @@ router.get('/verify-session/:sessionId', async (req, res) => {
 });
 
 router.post('/connect/onboard', requireAuth(), stripeConnectController.createOnboardingLink);
+router.post('/connect/account-session', requireAuth(), stripeConnectController.createAccountSession);
 router.get('/connect/status', requireAuth(), stripeConnectController.getConnectStatus);
 router.post('/connect/dashboard', requireAuth(), stripeConnectController.createDashboardLink);
 

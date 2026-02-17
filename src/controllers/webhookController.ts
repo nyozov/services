@@ -102,6 +102,7 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
           amount: paymentIntent.amount,
           receipt_email: paymentIntent.receipt_email ?? null,
           metadata: paymentIntent.metadata || {},
+          shipping: paymentIntent.shipping ?? null,
         });
 
         const storeOwner = await prisma.user.findUnique({
